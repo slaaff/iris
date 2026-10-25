@@ -1,0 +1,189 @@
+{
+    "name": "saves",
+    "description": "Realizar operações financeiras como bank, pagamentos e doações.",
+    "usage": {
+        "general": "[Prefix][Alias] [@user|-time] [-coin/-diamond/-gold/-iron/-rubi/-stone/-wood] [value]",
+        "examples": [
+            "/Doar --help",
+            "/Pay @user -coin 1000 -wood -999",
+            "/Bank -get -coin 1000",
+            "/Save -wood 50",
+            "saves.execute('kill', 'params')",
+            "saves.env()",
+            "saves.reset()",
+            "saves.env().functions.execute.value('kill', 'params')"
+        ]
+    },
+    "license": "MIT",
+    "helps": [
+        "Caso a contagem de tempo se torne negativa, ou seja, você demore muito tempo para usar novamente, o uso do '-time' poderá estar incorreto, sendo que na verdade, seu uso já estará liberado.",
+        "Se você não marcar algúem enquanto estiver usando a função doar, ela será automaticamente transferida para a execução de uma transferência para sua própria conta bancária, tome cuidado.",
+        "Há um limite padrão de 10.000 (ou -10000) de doação, pagamentos ou operações de banco por uso, pois inserir valores maiores (ou menores negativos) pode causar problemas quando você possui valores elevados (ou absurdamente negativos) com você.",
+        "Apenas a primeira pessoa mencionada ganhará os valores doados ou pagos, outras pessoas serão ignoradas se mencionadas.",
+        "Você pode definir multiplos valores para o comando, como coin e wood, assim não precisa usar em um a um.",
+        "Note que ao chegar em determinado valor de level ou XP, você será reinicializado para o começo, pois conseguiu 'completar' o jogo."
+    ],
+    "exports": {
+        "env": "env",
+        "messedup": "messedup",
+        "exec": "execute",
+        "reset": "reset",
+        "poswork": "finish"
+    },
+    "developer": "KillovSky",
+    "files": {
+        "index.js": "Sistema que faz a coleta das informações e envio.",
+        "utils.json": "Dados de fábrica da envInfo."
+    },
+    "modules": {
+        "fs": "Leitura de diretórios e arquivos.",
+        "path": "Para inserção do local na envInfo.",
+        "../../Dialogues/index": "Funções que retornam os diálogos necessários.",
+        "../../index'": "Para rodar funções de outros arquivos."
+    },
+    "functions": {
+        "ambient": {
+            "arguments": false,
+            "description": "Retorna as variáveis e sistemas do arquivo.",
+            "type": "Boolean / Function",
+            "value": false
+        },
+        "messedup": {
+            "arguments": {
+                "error": {
+                    "description": "Instância de erro para formatação.",
+                    "type": "Boolean / Error",
+                    "value": false
+                }
+            },
+            "description": "Ajusta os valores de erro.",
+            "type": "Boolean / Function",
+            "value": false
+        },
+        "exec": {
+            "arguments": {
+                "kill": {
+                    "description": "Funções de controle raiz da Íris.",
+                    "type": "Boolean / Object",
+                    "value": false
+                },
+                "env": {
+                    "description": "Dados da mensagem recebida.",
+                    "type": "Boolean / Object",
+                    "value": false
+                }
+            },
+            "description": "Executa o comando representado nesse arquivo.",
+            "type": "Boolean / Function",
+            "value": false
+        },
+        "poswork": {
+            "arguments": {
+                "response": {
+                    "description": "Resultados de uma função.",
+                    "type": "Any",
+                    "value": false
+                }
+            },
+            "description": "Verifica se pode resetar a envInfo e retorna o resultado da função.",
+            "type": "Boolean / Function",
+            "value": false
+        },
+        "revert": {
+            "arguments": {
+                "changeKey": {
+                    "description": "Uma Object com valores que existem na envInfo, ela será usada para substituir o sistema em tempo real.",
+                    "type": "Object value",
+                    "anyValue": false
+                }
+            },
+            "description": "Reseta a envInfo para a Object padrão.",
+            "type": "Boolean / Function",
+            "value": false
+        }
+    },
+    "settings": {
+        "wait": {
+            "description": "Tempo em MS que deve esperar antes de resetar.",
+            "type": "Number",
+            "value": 5000
+        },
+        "error": {
+            "description": "Define se pode printar qualquer erro.",
+            "type": "Boolean",
+            "value": true
+        },
+        "ender": {
+            "description": "Define se deve resetar a cada erro.",
+            "type": "Boolean",
+            "value": true
+        },
+        "finish": {
+            "description": "Define se deve resetar a cada finalização.",
+            "type": "Boolean",
+            "value": true
+        }
+    },
+    "parameters": {
+        "location": {
+            "description": "Local onde o módulo pode ser encontrado.",
+            "type": "Boolean / String",
+            "value": "./index"
+        },
+        "code": {
+            "description": "Código do erro que obter.",
+            "type": "Boolean / String / Number",
+            "value": false
+        },
+        "message": {
+            "description": "Armazena a mensagem do último erro recebido.",
+            "type": "Boolean / String",
+            "value": false
+        },
+        "waitTime": {
+            "description": "Tempo que deve aguardar para poder usar novamente as funções, milissegundos.",
+            "type": "Number",
+            "value": 1800000
+        },
+        "emojiData": {
+            "description": "Define os emojis de cada valor possivel.",
+            "type": "Object",
+            "value": {
+                "coin": "💰",
+                "diamond": "💎",
+                "rubi": "🔴",
+                "stone": "🪨",
+                "gold": "🏆",
+                "iron": "🪙",
+                "wood": "🌲",
+                "xp": "📈",
+                "level": "🎚️",
+                "messages": "📬"
+            }
+        },
+        "payLimit": {
+            "description": "Define o limite de doação ou bank das funções, note que valores muito altos podem levar a 'Infinity' ou 'Heap Out of Memory', cuidado.",
+            "type": "Number",
+            "value": 10000
+        },
+        "payAllowed": {
+            "description": "Define quais keys estão permitidas para doar, é necessário inserir '-' antes, pois isso é diretamente relacionado á variável 'body' no código.",
+            "type": "Array",
+            "value": [
+                "-coin",
+                "-diamond",
+                "-gold",
+                "-iron",
+                "-rubi",
+                "-stone",
+                "-wood"
+            ]
+        }
+    },
+    "results": {
+        "description": "Resultado final da função.",
+        "success": true,
+        "type": "String / Boolean",
+        "value": false
+    }
+}
